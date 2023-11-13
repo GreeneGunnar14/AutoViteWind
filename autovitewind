@@ -1,0 +1,61 @@
+#! /bin/bash
+# Vite + Tailwindcss automated setup script
+#
+# Created 11/13/2023, Author: Bryce Greene | greene8616@gmail.com
+# Last updated: 11/13/2023
+
+# Description: An automated script to setup a vite project with tailwindcss
+# Usage: '/path/to/setup.sh <project-name: optional>'
+
+# Create a vite project in working directory
+
+let pkg_name
+
+if [[ $# -eq 1 ]]; then
+  pkg_name=$1
+else
+  pkg_name='my_project'
+fi
+
+npm create vite@latest ./$pkg_name
+
+pushd ./$pkg_name
+
+# Install dependencies
+npm i
+
+# Install tailwind and necessary dependencies
+npm i -D tailwindcss postcss autoprefixer
+
+# Initialize a tailwind project
+npx tailwindcss init -p
+
+popd
+
+# Run python script to setup tailwind config file and index.css
+autovitewind.py $(pwd) /$pkg_name
+
+printf "\nSetup Completed Successfully!\n\n"
+
+read -rp "Would you like to run development server?[Y/n]: " ans
+
+case $ans in
+  "Y" | "y" )
+    pushd ./$pkg_name
+    npm run dev
+  ;;
+  "N" | "n" )
+    exit 0
+  ;;
+  "" | " " )
+    pushd ./$pkg_name
+    npm run dev
+  ;;
+  * )
+    echo "Invalid input detected. Exiting . . . "
+    exit 0
+  ;;
+esac
+    
+
+exit 0
