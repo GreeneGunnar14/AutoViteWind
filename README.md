@@ -23,3 +23,8 @@ An automated setup script that creates a new Vite project with Tailwind.
 - Run `autovitewind <project_name: optional>` and follow the setup instructions for the Vite project.
   - (The default project name will be my_project)
 - Once installation and setup have completed, your project should be ready to use.
+
+## After Completion
+
+- Your Vite project will be in a subfolder of the folder you ran the command in.
+- If you want to move the project from the subfolder to your current folder, run `mv ./<project_name>/* ./`
