@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import sys
+import os
 
 if __name__ == '__main__':
 
@@ -13,8 +14,8 @@ if __name__ == '__main__':
     project_folder = sys.argv[2]
 
     # Create filenames from filepath
-    config_file = filepath + project_folder + '/tailwind.config.js'
-    css_file = filepath + project_folder + '/src/index.css'
+    config_file = os.path.join(filepath, project_folder, 'tailwind.config.js')
+    css_file = os.path.join(filepath, project_folder, 'src', 'index.css') 
     
     try:
         # Open tailwind config file, add content
@@ -22,7 +23,7 @@ if __name__ == '__main__':
         with open(config_file, 'r') as f:
             config_lines = f.readlines()
 
-        config_lines[2] = "  content: ['./src/**/*.{js,ts,jsx,tsx}', './src/index.html'],\n"
+        config_lines[2] = f"  content: [{os.path.join('.', 'src', '**', '*.{js,ts,jsx,tsx}')}, {os.path.join('.', 'src', 'index.html')}'],\n"
 
         with open(config_file, 'w') as f:
             f.writelines(config_lines)

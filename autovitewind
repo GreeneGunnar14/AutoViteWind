@@ -33,7 +33,7 @@ npx tailwindcss init -p
 popd
 
 # Run python script to setup tailwind config file and index.css
-autovitewind.py $(pwd) /$pkg_name
+autovitewind.py $(pwd) $pkg_name
 
 printf "\nSetup Completed Successfully!\n\n"
 
