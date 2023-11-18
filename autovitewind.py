@@ -23,7 +23,7 @@ if __name__ == '__main__':
         with open(config_file, 'r') as f:
             config_lines = f.readlines()
 
-        config_lines[2] = f"  content: [{os.path.join('.', 'src', '**', '*.{js,ts,jsx,tsx}')}, {os.path.join('.', 'src', 'index.html')}'],\n"
+        config_lines[2] = f"  content: ['{os.path.join('.', 'src', '**', '*.{js,ts,jsx,tsx}')}, {os.path.join('.', 'src', 'index.html')}'],\n"
 
         with open(config_file, 'w') as f:
             f.writelines(config_lines)
