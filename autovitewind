@@ -9,7 +9,6 @@
 
 # Create a vite project in working directory
 
-let pkg_name
 let inplace
 
 if [[ $# -eq 1 ]]; then
@@ -20,7 +19,7 @@ else
   inplace=true
 fi
 
-pushd ./$pkg_name
+pushd ./$1
 
 # Install dependencies
 npm i
@@ -34,13 +33,11 @@ npx tailwindcss init -p
 # Remove unnecessary css file
 rm ./src/App.css
 
-popd
-
 # Run python script to setup tailwind config file and index.css
 if [ $inplace ]; then
   autovitewind.py "$(pwd)"
 else
-  autovitewind.py "$(pwd)" $pkg_name
+  autovitewind.py "$(pwd)" $1
 fi
 
 printf "\nSetup Completed Successfully!\n\n"
