@@ -10,14 +10,15 @@
 # Create a vite project in working directory
 
 let pkg_name
+let inplace
 
 if [[ $# -eq 1 ]]; then
-  pkg_name=$1
+  npm create vite@latest ./$1 -- --template react-ts
+  inplace=false
 else
-  pkg_name='my_project'
+  npm create vite@latest . -- --template react-ts
+  inplace=true
 fi
-
-npm create vite@latest ./$pkg_name
 
 pushd ./$pkg_name
 
@@ -30,10 +31,17 @@ npm i -D tailwindcss postcss autoprefixer
 # Initialize a tailwind project
 npx tailwindcss init -p
 
+# Remove unnecessary css file
+rm ./src/App.css
+
 popd
 
 # Run python script to setup tailwind config file and index.css
-autovitewind.py $(pwd) $pkg_name
+if [ $inplace ]; then
+  autovitewind.py "$(pwd)"
+else
+  autovitewind.py "$(pwd)" $pkg_name
+fi
 
 printf "\nSetup Completed Successfully!\n\n"
 
